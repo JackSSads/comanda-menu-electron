@@ -18,7 +18,7 @@ class CustomPrinter {
 
     async newOrder(order) {
         this.printer.alignCenter();
-        this.printer.println("O SIRI CASCUDO");
+        this.printer.println(`${String(order.name_estabeleciment).toUpperCase()}`);
         this.printer.drawLine();
 
         this.printer.alignLeft();
