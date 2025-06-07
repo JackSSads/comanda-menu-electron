@@ -69,7 +69,7 @@ class CustomPrinter {
         this.printer.cut();
 
         try {
-            // await this.printer.execute();
+            await this.printer.execute();
             return { title: "Impressão concluída", body: "Pedido impresso com sucesso!" };
         } catch (error) {
             return { title: "Erro na impressão", body: error.message }
