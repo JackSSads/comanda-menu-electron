@@ -30,6 +30,7 @@ socket.on("print_check", (data) => {
 });
 
 socket.on("new_order", (data) => {
+    const print = new CustomPrinter(data.printer_name);
     print.newOrder(data)
         .then((result) => {
             showNotification(result.title, result.body);
