@@ -21,22 +21,18 @@ socket.on("disconnect", (reason) => {
 socket.on("print_check", (data) => {
     const print = new CustomPrinter(data.printer_name);
     print.closeCheck(data)
-        .then((result) => {
-            showNotification(result.title, result.body);
-        })
         .catch((error) => {
-            showNotification(error.title, error.body);
+            showNotification("Ocorreu um erro ao tentar imprimir!", error.message);
         });
 });
 
 socket.on("new_order", (data) => {
+    if (!data.printer_name) return;
+
     const print = new CustomPrinter(data.printer_name);
     print.newOrder(data)
-        .then((result) => {
-            showNotification(result.title, result.body);
-        })
         .catch((error) => {
-            showNotification(error.title, error.body);
+            showNotification("Ocorreu um erro ao tentar imprimir!", error.message);
         });
 });
 
