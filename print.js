@@ -48,7 +48,7 @@ class CustomPrinter {
 
     async closeCheck(order) {
         this.printer.alignCenter();
-        this.printer.println("O SIRI CASCUDO");
+        this.printer.println(`${String(order.name_estabeleciment).toUpperCase()}`);
         this.printer.drawLine();
 
         this.printer.alignLeft();
@@ -60,6 +60,7 @@ class CustomPrinter {
             this.printer.println(
                 `• ${item.quantity}x ${item.product_name} - R$ ${parseFloat(item.total_price).toFixed(2)}`
             );
+            item.obs && this.printer.println(`OBS: ${item.obs}`);
         });
 
         this.printer.drawLine();
