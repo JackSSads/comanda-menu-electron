@@ -51,6 +51,7 @@ function createWindow() {
             nodeIntegration: false,
             contextIsolation: true,
         },
+        autoHideMenuBar: true
     });
 
     win.loadURL(process.env.FRONT_URL);
