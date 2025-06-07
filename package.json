@@ -1,0 +1,35 @@
+{
+  "name": "comanda-electron",
+  "version": "1.0.0",
+  "author": "Jackson Souza",
+  "description": "App que irá renderizar o site Comanda Menu",
+  "license": "ISC",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "com.jackson.comanda",
+    "productName": "Comanda Menu",
+    "files": [
+      "**/*"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis"
+    }
+  },
+  "devDependencies": {
+    "electron": "^36.4.0",
+    "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "@thesusheer/electron-printer": "^2.0.4",
+    "dotenv": "^16.5.0",
+    "node-thermal-printer": "^4.5.0",
+    "socket.io-client": "^4.8.1"
+  }
+}
