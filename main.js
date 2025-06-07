@@ -19,7 +19,7 @@ socket.on("disconnect", (reason) => {
 });
 
 socket.on("print_check", (data) => {
-    const print = new CustomPrinter();
+    const print = new CustomPrinter(data.printer_name);
     print.closeCheck(data)
         .then((result) => {
             showNotification(result.title, result.body);

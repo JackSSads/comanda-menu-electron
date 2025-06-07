@@ -5,10 +5,10 @@ import { config } from "dotenv";
 config();
 
 class CustomPrinter {
-    constructor() {
+    constructor(printer_name) {
         this.printer = new ThermalPrinter({
             type: PrinterTypes.EPSON,
-            interface: `printer:${process.env.PRINTER_NAME}`,
+            interface: `printer:${printer_name}`,
             characterSet: "SLOVENIA",
             driver: electronPrinter,
             removeSpecialCharacters: false,
