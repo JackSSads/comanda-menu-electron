@@ -18,7 +18,7 @@ class CustomPrinter {
 
     async newOrder(order) {
         this.printer.alignCenter();
-        this.printer.println(`${String(order.name_estabeleciment).toUpperCase()}`);
+        this.printer.println(`${String(order.estabishment_name).toUpperCase()}`);
         this.printer.drawLine();
 
         this.printer.alignLeft();
@@ -48,7 +48,7 @@ class CustomPrinter {
 
     async closeCheck(order) {
         this.printer.alignCenter();
-        this.printer.println(`${String(order.name_estabeleciment).toUpperCase()}`);
+        this.printer.println(`${String(order.estabishment_name).toUpperCase()}`);
         this.printer.drawLine();
 
         this.printer.alignLeft();
@@ -69,7 +69,7 @@ class CustomPrinter {
         this.printer.cut();
 
         try {
-            await this.printer.execute();
+            // await this.printer.execute();
             return { title: "Impressão concluída", body: "Pedido impresso com sucesso!" };
         } catch (error) {
             return { title: "Erro na impressão", body: error.message }
