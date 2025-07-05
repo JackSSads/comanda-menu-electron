@@ -5,7 +5,7 @@ import CustomPrinter from "./print.js";
 
 config();
 
-const socket = io("", {
+const socket = io("https://api.seu-site.com", {
     withCredentials: true,
     transports: ["websocket"],
 });
@@ -51,7 +51,7 @@ function createWindow() {
         autoHideMenuBar: true
     });
 
-    win.loadURL("");
+    win.loadURL("https://seu-site.com");
 };
 
 app.whenReady().then(() => {
