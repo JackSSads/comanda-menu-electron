@@ -1,11 +1,14 @@
 import { app, BrowserWindow, Notification } from "electron";
 import { io } from "socket.io-client";
-import { config } from "dotenv";
 import CustomPrinter from "./print.js";
 
-config();
+import path from "path";
+import { fileURLToPath } from "url";
 
-const socket = io("https://api.seu-site.com", {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const socket = io("http://localhost:3001", {
     withCredentials: true,
     transports: ["websocket"],
 });
@@ -19,21 +22,53 @@ socket.on("disconnect", (reason) => {
 });
 
 socket.on("print_check", (data) => {
-    const print = new CustomPrinter(data.printer_name);
-    print.closeCheck(data)
-        .catch((error) => {
-            showNotification("Ocorreu um erro ao tentar imprimir!", error.message);
+    new CustomPrinter(data.printer_name)
+        .closeCheck(data)
+        .catch(() => {
+            showNotification("Ocorreu um erro ao tentar imprimir!");
         });
 });
 
 socket.on("new_order", (data) => {
-    if (!data.printer_name) return;
+    const printers = data.printer_name || [];
 
-    const print = new CustomPrinter(data.printer_name);
-    print.newOrder(data)
-        .catch((error) => {
-            showNotification("Ocorreu um erro ao tentar imprimir!", error.message);
-        });
+    if (!printers.length) return;
+
+    printers.forEach((printer) => {
+        new CustomPrinter(printer)
+            .newOrder(data)
+            .catch((error) => {
+                showNotification("Ocorreu um erro ao tentar imprimir!", error.message);
+            });
+    });
+});
+
+socket.on("quantity_change", (data) => {
+    const printers = data.printer_name || [];
+
+    if (!printers.length) return;
+
+    printers.forEach((printer) => {
+        new CustomPrinter(printer)
+            .printQuantityChange(data)
+            .catch((error) => {
+                showNotification("Ocorreu um erro ao tentar imprimir!", error.message);
+            });
+    });
+});
+
+socket.on("product_removed", (data) => {
+    const printers = data.printer_name || [];
+
+    if (!printers.length) return;
+
+    printers.forEach((printer) => {
+        new CustomPrinter(printer)
+            .printProductRemoved(data)
+            .catch((error) => {
+                showNotification("Ocorreu um erro ao tentar imprimir!", error.message);
+            });
+    });
 });
 
 function showNotification(title, body) {
@@ -48,10 +83,11 @@ function createWindow() {
             nodeIntegration: false,
             contextIsolation: true,
         },
-        autoHideMenuBar: true
+        autoHideMenuBar: true,
+        icon: path.join(__dirname, 'assets', 'logo.ico')
     });
 
-    win.loadURL("https://seu-site.com");
+    win.loadURL("http://localhost:3000/login");
 };
 
 app.whenReady().then(() => {
